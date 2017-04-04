@@ -4,9 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pylab as pl
 
-def prettyPicture(clf, X_test, y_test):
-    x_min = 0.0; x_max = 1.0
-    y_min = 0.0; y_max = 1.0
+
+def prettyPicture(clf, X_train, y_train, X_test, y_test):
+    x_min, x_max = (0.0, 1.0)
+    y_min, y_max = (0.0, 1.0)
     
     # Plot the decision boundary. For that, we will assign a color to each
     # point in the mesh [x_min, m_max]x[y_min, y_max].
@@ -21,23 +22,33 @@ def prettyPicture(clf, X_test, y_test):
 
     plt.pcolormesh(xx, yy, Z, cmap=pl.cm.seismic)
 
+    # Plot also the training points
+    grade_fast_train = [X_train[ii][0] for ii in range(0, len(X_train)) if y_train[ii] == 0]
+    bumpy_fast_train = [X_train[ii][1] for ii in range(0, len(X_train)) if y_train[ii] == 0]
+    grade_slow_train = [X_train[ii][0] for ii in range(0, len(X_train)) if y_train[ii] == 1]
+    bumpy_slow_train = [X_train[ii][1] for ii in range(0, len(X_train)) if y_train[ii] == 1]
+
     # Plot also the test points
-    grade_sig = [X_test[ii][0] for ii in range(0, len(X_test)) if y_test[ii]==0]
-    bumpy_sig = [X_test[ii][1] for ii in range(0, len(X_test)) if y_test[ii]==0]
-    grade_bkg = [X_test[ii][0] for ii in range(0, len(X_test)) if y_test[ii]==1]
-    bumpy_bkg = [X_test[ii][1] for ii in range(0, len(X_test)) if y_test[ii]==1]
+    grade_fast_test = [X_test[ii][0] for ii in range(0, len(X_test)) if y_test[ii] == 0]
+    bumpy_fast_test = [X_test[ii][1] for ii in range(0, len(X_test)) if y_test[ii] == 0]
+    grade_slow_test = [X_test[ii][0] for ii in range(0, len(X_test)) if y_test[ii] == 1]
+    bumpy_slow_test = [X_test[ii][1] for ii in range(0, len(X_test)) if y_test[ii] == 1]
 
-    plt.scatter(grade_sig, bumpy_sig, color = "b", label="fast")
-    plt.scatter(grade_bkg, bumpy_bkg, color = "r", label="slow")
+    plt.scatter(grade_fast_train, bumpy_fast_train, facecolors='none', edgecolors='b', label="train_fast")
+    plt.scatter(grade_slow_train, bumpy_slow_train, facecolors='none', edgecolors='r', label="train_slow")
+    plt.scatter(grade_fast_test, bumpy_fast_test, c='b', label="test_fast")
+    plt.scatter(grade_slow_test, bumpy_slow_test, c='r', label="test_slow")
     plt.legend()
-    plt.xlabel("bumpiness")
-    plt.ylabel("grade")
+    plt.xlabel("grade")
+    plt.ylabel("bumpiness")
+    # plt.savefig("test.png")
+    plt.show()
 
-    plt.savefig("test.png")
 
 import base64
 import json
 import subprocess
+
 
 def output_image(name, format, bytes):
     image_start = "BEGIN_IMAGE_f9825uweof8jw9fj4r8"
@@ -47,4 +58,3 @@ def output_image(name, format, bytes):
     data['format'] = format
     data['bytes'] = base64.encodestring(bytes)
     print image_start+json.dumps(data)+image_end
-                                    

@@ -57,5 +57,7 @@ for zeros in range(4, 6):
     items = [10, 26, 50]
     print("Predictions for items {}: {}".format(items, pred_test[items]))
 
+    print("Emails predicted to be written by Sara: {}".format(sum(pred_test == 0)))
     print("Emails predicted to be written by Chris: {}".format(sum(pred_test == 1)))
+
 #########################################################
