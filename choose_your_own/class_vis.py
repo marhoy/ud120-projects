@@ -34,8 +34,8 @@ def prettyPicture(clf, X_train, y_train, X_test, y_test):
     grade_slow_test = [X_test[ii][0] for ii in range(0, len(X_test)) if y_test[ii] == 1]
     bumpy_slow_test = [X_test[ii][1] for ii in range(0, len(X_test)) if y_test[ii] == 1]
 
-    plt.scatter(grade_fast_train, bumpy_fast_train, facecolors='none', edgecolors='b', label="train_fast")
-    plt.scatter(grade_slow_train, bumpy_slow_train, facecolors='none', edgecolors='r', label="train_slow")
+    plt.scatter(grade_fast_train, bumpy_fast_train, marker='+', c='b', label="train_fast")
+    plt.scatter(grade_slow_train, bumpy_slow_train, marker='+', c='r', label="train_slow")
     plt.scatter(grade_fast_test, bumpy_fast_test, c='b', label="test_fast")
     plt.scatter(grade_slow_test, bumpy_slow_test, c='r', label="test_slow")
     plt.legend()
