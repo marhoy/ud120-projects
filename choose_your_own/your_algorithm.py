@@ -33,13 +33,22 @@ features_train, labels_train, features_test, labels_test = makeTerrainData()
 # visualization code (prettyPicture) to show you the decision boundary
 
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.metrics import accuracy_score
 
 print("Number of train samples:", len(labels_train))
 print("Number of test samples:", len(labels_test))
 
-
+# k-NN
 clf = KNeighborsClassifier()
+
+# Random Forest
+# clf = RandomForestClassifier(n_estimators=100)
+
+# AdaBoost
+# clf = AdaBoostClassifier(n_estimators=100)
+
+
 clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 acc = accuracy_score(labels_test, pred)
